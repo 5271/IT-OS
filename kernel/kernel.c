@@ -83,6 +83,8 @@ void terminal_putchar(char c)
 
 	if (++terminal_column == VGA_WIDTH)
 	{
+		if (c == '\n') terminal_row++; 
+
 		terminal_column = 0; // goes to the first column if we already used the last one
 
 		if (++terminal_row == VGA_HEIGHT) terminal_row = 0; // goes to the first row when the first last one was used
