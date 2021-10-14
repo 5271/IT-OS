@@ -107,9 +107,9 @@ void kernel_main(void)
 {
 	terminal_initialize(); // initializes the terminal interface
 
-	terminal_writestring("Welcome to IT-OS 0.0.1\n");
+	terminal_writestring("Welcome to sasIT-OS 0.0.1\n");
 
 	kernel_terminal_info_color(true);
-	terminal_writestring("This is a deveopler version, not and official release.\n");
+	terminal_writestring("This is a deveopler version, not and official release.\n helo");
 	kernel_terminal_info_color(false);
 }
