@@ -79,12 +79,15 @@ void terminal_putentryat(char c, uint8_t color, size_t x, size_t y)
 
 void terminal_putchar(char c)
 {
-	terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
+	if (c == '\n') 
+	{	
+		terminal_newline();
+		return;
+	}
 
+	terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
 	if (++terminal_column == VGA_WIDTH)
 	{
-		if (c == '\n') terminal_row++; 
-
 		terminal_column = 0; // goes to the first column if we already used the last one
 
 		if (++terminal_row == VGA_HEIGHT) terminal_row = 0; // goes to the first row when the first last one was used
@@ -97,19 +100,26 @@ void terminal_writestring(const char* str)
 	for (size_t i = 0; i < size; i++) terminal_putchar(str[i]);
 }
 
-void kernel_terminal_info_color(bool b)
+void terminal_info_color(bool b)
 {
 	if (b) terminal_color = vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLUE);
 	else terminal_color = vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK);
+}
+
+void terminal_newline()
+{
+	terminal_row = terminal_row + 1;
+	terminal_column = 0;
 }
 
 void kernel_main(void)
 {
 	terminal_initialize(); // initializes the terminal interface
 
-	terminal_writestring("Welcome to sasIT-OS 0.0.1\n");
-
-	kernel_terminal_info_color(true);
-	terminal_writestring("This is a deveopler version, not and official release.\n helo");
-	kernel_terminal_info_color(false);
+	terminal_writestring("Welcome to IT-OS 0.0.1\n");
+	/*
+	terminal_info_color(true);
+	terminal_writestring("This is a deveopler version, not and official release.\n");
+	terminal_info_color(false);
+	*/
 }
